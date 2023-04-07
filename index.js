@@ -5,8 +5,7 @@ require("dotenv").config();
 const cron = require("node-cron");
 
 const token = process.env.TOKEN;
-const reminderId = process.env.REMINDER_CHANNEL_ID;
-const guildId = process.env.GUILD_ID;
+const reminderChannelId = process.env.REMINDER_CHANNEL_ID;
 
 const client = new Client({
   intents: [
@@ -20,10 +19,10 @@ const client = new Client({
 // Reminder function runs everyday at 09h00 from monday to friday
 
 client.once(Events.ClientReady, async (c) => {
-  const channel = await client.channels.fetch(reminderId);
+  const reminderChannel = await client.channels.fetch(reminderChannelId);
   console.log(`Ready! Logged in as ${c.user.tag}`);
   cron.schedule("0 9 * * 1-5", () => {
-    channel.send(
+    reminderChannel.send(
       "@everyone Friendly reminder to sign your presence sheet 😁 !!!!"
     );
   });
